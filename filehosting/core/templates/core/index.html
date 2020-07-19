@@ -1,0 +1,38 @@
+<h1>Filehosting web service</h1>
+
+<p>Here you can upload your file for storing during the specified period of time.</p>
+
+<form method="post" action="{% url 'index' %}" enctype="multipart/form-data" target="_blank">
+
+{% csrf_token %}
+
+<table>
+    <tr>
+        <td>{{ upload_file_form.file.label_tag }}</td>
+        <td>{{ upload_file_form.file }}</td>
+    </tr>
+    <tr>
+        <td>{{ upload_file_form.expiration_in.label_tag }}</td>
+        <td>{{ upload_file_form.expiration_in }}</td>
+    </tr>
+</table>
+
+<p></p>
+
+<div id="loading" style="display: none; color: green" >
+    <div>
+        Please, wait until the uploading will be completed...
+    </div>
+    <p></p>
+</div>
+
+    <input type="submit" value="Upload file" onclick="wait_notification()" >
+
+</form>
+
+
+<script type="text/javascript">
+    function wait_notification() {
+         document.getElementById('loading').style.display = "block";
+    }
+</script>
