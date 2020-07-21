@@ -1,11 +1,11 @@
 <h1>Uploaded file info page</h1>
 
-<p>File name: ...</p>
+<p>File name: {{ filename }}</p>
 
-<p>File size: ...</p>
+<p>File size: {{ file_size }}</p>
 
 <p>Download file at:
-    <a href="{% url 'file-get' file_id=file_id %}">{% url 'file-get' file_id=file_id %}</a>
+    <a href="{% url 'core:file-get' file_id=file_id %}"> {{ request.get_host }}{% url 'core:file-get' file_id=file_id %} </a>
 </p>
 
-<p>File will be expired at: ... (in ... minutes) </p>
+<p>File will be expired at: {{ expiration_at }} (in {{ minutes_to_expiration }}:{{ seconds_to_expiration }} minutes) </p>

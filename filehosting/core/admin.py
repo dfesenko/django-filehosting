@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import FileObject
+
+
+class FileObjectAdmin(admin.ModelAdmin):
+    list_display = ('uploaded_at', 'expiration_at')
+
+
+admin.site.register(FileObject, FileObjectAdmin)

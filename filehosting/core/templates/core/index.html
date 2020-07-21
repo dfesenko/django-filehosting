@@ -2,7 +2,7 @@
 
 <p>Here you can upload your file for storing during the specified period of time.</p>
 
-<form method="post" action="{% url 'index' %}" enctype="multipart/form-data" target="_blank">
+<form method="post" action="{% url 'core:index' %}" enctype="multipart/form-data" target="_blank">
 
 {% csrf_token %}
 

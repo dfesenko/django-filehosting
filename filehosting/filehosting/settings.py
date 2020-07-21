@@ -121,3 +121,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MAX_SIZE = 52428800
+
+MEDIA_URL = 'media/'

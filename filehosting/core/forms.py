@@ -8,7 +8,7 @@ class UploadFileForm(forms.ModelForm):
 
     class Meta:
         model = models.FileObject
-        fields = ('file', 'expiration_in')
+        fields = ('file',)
 
     file = forms.FileField(required=True)
     expiration_in = forms.IntegerField(min_value=1, max_value=5, required=True, label='Minutes to expiration')
