@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import View
 from django.http import HttpResponse, Http404
 from django.conf import settings
 from django.utils import timezone
+from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import UploadFileForm
 from .models import FileObject
@@ -33,7 +34,9 @@ class IndexView(View):
 class FileInfoView(View):
 
     def get(self, request, file_id):
-        file_obj = FileObject.objects.get(file__contains=file_id)
+
+        file_obj = get_object_or_404(FileObject, file__contains=file_id)
+
         if file_obj.expiration_at > timezone.now():
             mins_to_expiration = (file_obj.expiration_at - timezone.now())
 
@@ -65,7 +68,8 @@ class FileInfoView(View):
 class FileDownloadView(View):
 
     def get(self, request, file_id):
-        file_obj = FileObject.objects.get(file__contains=file_id)
+
+        file_obj = get_object_or_404(FileObject, file__contains=file_id)
 
         if file_obj.expiration_at > timezone.now():
             filename = os.listdir(settings.MEDIA_URL + str(self.kwargs['file_id']))[0]
