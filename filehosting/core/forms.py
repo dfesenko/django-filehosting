@@ -11,7 +11,7 @@ class UploadFileForm(forms.ModelForm):
         fields = ('file',)
 
     file = forms.FileField(required=True)
-    expiration_in = forms.IntegerField(min_value=1, max_value=5, required=True, label='Minutes to expiration')
+    expiration_in = forms.IntegerField(min_value=1, max_value=30, required=True, label='Minutes to expiration')
 
     def clean_file(self):
         file = self.cleaned_data['file']
