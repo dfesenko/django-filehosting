@@ -12,7 +12,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    'remove-expired-every-single-minute': {
+    'remove-expired-every-thirty-minutes': {
         'task': 'core.tasks.remove_expired_files',
         'schedule': crontab(minute='*/30'),
     },
