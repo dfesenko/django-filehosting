@@ -14,7 +14,7 @@ def filename_generator(instance, filename):
 
 class FileObject(models.Model):
     file = models.FileField(upload_to=filename_generator)
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+    uploaded_at = models.DateTimeField()
     expiration_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):

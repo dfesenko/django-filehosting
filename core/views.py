@@ -3,14 +3,13 @@ from django.views.generic.base import View
 from django.http import HttpResponse, Http404
 from django.conf import settings
 from django.utils import timezone
-from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import UploadFileForm
 from .models import FileObject
 
 import magic
 import os
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 
 class IndexView(View):
@@ -23,8 +22,10 @@ class IndexView(View):
         upload_file_form = UploadFileForm(request.POST, request.FILES)
 
         if upload_file_form.is_valid():
-            file_obj = upload_file_form.save()
-            file_obj.expiration_at = datetime.now() + timedelta(minutes=upload_file_form.cleaned_data['expiration_in'])
+            file_obj = upload_file_form.save(commit=False)
+            now = timezone.now()
+            file_obj.uploaded_at = now
+            file_obj.expiration_at = now + timedelta(minutes=upload_file_form.cleaned_data['expiration_in'])
             file_obj.save()
             return redirect('core:file-info', file_id=str(file_obj.file).split("/")[1])
         else:
