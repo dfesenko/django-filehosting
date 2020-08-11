@@ -46,12 +46,14 @@ class FileInfoView(View):
             secs_to_expiration = "0" + str(secs_to_expiration) if secs_to_expiration < 10 else secs_to_expiration
             mins_to_expiration = "0" + str(mins_to_expiration) if mins_to_expiration < 10 else mins_to_expiration
 
-            file_id = str(file_obj).split("/")[1]
+            split_path = str(file_obj).split("/")
+
+            file_id = split_path[1]
 
             file_size = f"{str(round(file_obj.file.size / 1000, 2))} KB" if file_obj.file.size < 1000000 \
                 else f"{str(round(file_obj.file.size / 1000000, 2))} MB"
 
-            filename = str(file_obj).split("/")[-1]
+            filename = split_path[-1]
 
             expiration_at = file_obj.expiration_at
 
@@ -72,8 +74,9 @@ class FileDownloadView(View):
         file_obj = get_object_or_404(FileObject, file__contains=file_id)
 
         if file_obj.expiration_at > timezone.now():
-            filename = os.listdir(settings.MEDIA_URL + str(self.kwargs['file_id']))[0]
-            file_path = f"{settings.MEDIA_URL}{str(self.kwargs['file_id'])}/{filename}"
+            file_id = str(self.kwargs['file_id'])
+            filename = os.listdir(settings.MEDIA_URL + file_id)[0]
+            file_path = f"{settings.MEDIA_URL}{file_id}/{filename}"
             with open(file_path, 'rb') as f:
                 file_data = f.read()
 
