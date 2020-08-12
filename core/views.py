@@ -88,6 +88,8 @@ class FileDownloadView(View):
                 print(mime_type)
 
                 # sending response
-                return HttpResponse(file_data, content_type=f'{mime_type}; charset=utf-8')
+                response = HttpResponse(file_data, content_type=f'{mime_type}; charset=utf-8')
+                response['Content-Disposition'] = f'attachment; filename="{filename}"'
+                return response
         else:
             raise Http404("File does not exist")
