@@ -14,6 +14,7 @@ def filename_generator(instance, filename):
 
 class FileObject(models.Model):
     file = models.FileField(upload_to=filename_generator)
+    filename = models.CharField(blank=True, max_length=100)
     uploaded_at = models.DateTimeField()
     expiration_at = models.DateTimeField(blank=True, null=True)
 
